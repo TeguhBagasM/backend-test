@@ -1,0 +1,12 @@
+### Login (dapatkan token)
+POST http://127.0.0.1:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@admin.com",
+  "password": "password"
+}
+
+### Logout
+POST http://127.0.0.1:8000/api/logout
+Authorization: Bearer 48151cb66be2d9d6bd043dc9d830bde0e73944e39bd90c2198d62751b237eccbk

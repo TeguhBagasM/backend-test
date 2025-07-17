@@ -28,6 +28,11 @@ class DatabaseSeeder extends Seeder
             'phone' => '081234567890',
             'email' => 'admin@example.com',
         ]);
+        User::create([
+            'name' => 'Administrator',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password'),
+        ]);
 
         $divisions = ['Mobile Apps', 'QA', 'Full Stack', 'Backend', 'Frontend', 'UI/UX Designer'];
         foreach ($divisions as $division) {
