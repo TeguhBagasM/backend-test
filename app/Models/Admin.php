@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 
 class Admin extends Model
 {
+    use HasApiTokens; 
     protected $keyType = 'string';
     public $incrementing = false;
 
