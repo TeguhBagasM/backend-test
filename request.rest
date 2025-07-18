@@ -10,3 +10,40 @@ Content-Type: application/json
 ### Logout
 POST http://127.0.0.1:8000/api/logout
 Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+
+### get divisions
+GET http://127.0.0.1:8000/api/divisions
+Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+
+
+### get employees
+GET http://127.0.0.1:8000/api/employees
+Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+
+### Create new employee
+POST http://127.0.0.1:8000/api/employees
+Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Content-Type: application/json
+
+{
+  "name": "Bagas",
+  "phone": "081234567890",
+  "division_id": "29014e5c-ac96-4f21-bfe4-4e61aa7a0691",
+  "position": "Solo Developer"
+}
+
+### Update employee
+PUT http://127.0.0.1:8000/api/employees/62a05934-6448-4621-bd07-25a305f0a6c3
+Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Content-Type: application/json
+
+{
+  "name": "Bagas Updated",
+  "phone": "081234567890",
+  "division_id": "29014e5c-ac96-4f21-bfe4-4e61aa7a0691",
+  "position": "Senior Developer"
+}
+
+### Delete employee
+DELETE http://127.0.0.1:8000/api/employees/62a05934-6448-4621-bd07-25a305f0a6c3
+Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037

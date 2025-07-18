@@ -14,11 +14,11 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
-            'division' => 'required|string|exists:divisions,id',
+            'division_id' => 'required|uuid|exists:divisions,id',
             'position' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

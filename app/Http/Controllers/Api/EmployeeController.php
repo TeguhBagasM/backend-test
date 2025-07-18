@@ -49,64 +49,100 @@ class EmployeeController extends Controller
     
     public function store(CreateEmployeeRequest $request)
     {
-        $data = $request->validated();
-        
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('employees', 'public');
-            $data['image'] = $imagePath;
+        try {
+            $data = [
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'division_id' => $request->division_id, // Perbaiki ini
+                'position' => $request->position,
+            ];
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('employees', $imageName, 'public');
+                $data['image'] = $imagePath;
+            }
+
+            Employee::create($data);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data karyawan berhasil ditambahkan',
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan sistem',
+                'error' => $e->getMessage() // Tambahkan ini untuk debug
+            ], 500);
         }
-        
-        $data['division_id'] = $data['division'];
-        unset($data['division']);
-        
-        Employee::create($data);
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Employee created successfully',
-        ], 201);
     }
     
     public function update(UpdateEmployeeRequest $request, $id)
     {
-        $employee = Employee::findOrFail($id);
-        $data = $request->validated();
-        
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($employee->image) {
-                Storage::disk('public')->delete($employee->image);
+        try {
+            $employee = Employee::findOrFail($id);
+
+            $data = [
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'division_id' => $request->division,
+                'position' => $request->position,
+            ];
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($employee->image) {
+                    Storage::disk('public')->delete($employee->image);
+                }
+
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('employees', $imageName, 'public');
+                $data['image'] = $imagePath;
             }
-            
-            $imagePath = $request->file('image')->store('employees', 'public');
-            $data['image'] = $imagePath;
+
+            $employee->update($data);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data karyawan berhasil diperbarui',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan sistem',
+            ], 500);
         }
-        
-        $data['division_id'] = $data['division'];
-        unset($data['division']);
-        
-        $employee->update($data);
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Employee updated successfully',
-        ]);
     }
     
     public function destroy($id)
     {
-        $employee = Employee::findOrFail($id);
-        
-        // Delete image if exists
-        if ($employee->image) {
-            Storage::disk('public')->delete($employee->image);
+        try {
+            $employee = Employee::findOrFail($id);
+
+            // Delete image if exists
+            if ($employee->image) {
+                Storage::disk('public')->delete($employee->image);
+            }
+
+            $employee->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data karyawan berhasil dihapus',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan sistem',
+            ], 500);
         }
-        
-        $employee->delete();
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Employee deleted successfully',
-        ]);
     }
 }

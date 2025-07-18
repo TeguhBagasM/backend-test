@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\CreateEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -55,13 +56,13 @@ class EmployeeController extends Controller
         }
     }
 
-    public function store(EmployeeRequest $request)
+    public function store(CreateEmployeeRequest $request)
     {
         try {
             $data = [
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'division_id' => $request->division,
+                'division_id' => $request->division_id, // Perbaiki ini
                 'position' => $request->position,
             ];
 
@@ -84,11 +85,12 @@ class EmployeeController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan sistem',
+                'error' => $e->getMessage() // Tambahkan ini untuk debug
             ], 500);
         }
     }
 
-    public function update(EmployeeRequest $request, $id)
+    public function update(UpdateEmployeeRequest $request, $id)
     {
         try {
             $employee = Employee::findOrFail($id);
