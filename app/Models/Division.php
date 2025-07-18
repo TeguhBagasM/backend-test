@@ -1,21 +1,27 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class Division extends Model
 {
-    protected $keyType = 'string';
-    public $incrementing = false;
+    use HasFactory;
 
-    protected $fillable = ['name'];
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'name',
+    ];
 
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($model) {
-            $model->id = Uuid::uuid4()->toString();
+            $model->id = (string) Str::uuid();
         });
     }
 

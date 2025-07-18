@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Division;
 use App\Models\User;
+use Illuminate\Support\Str;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,17 +22,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        Admin::create([
+       User::create([
+            'id' => Str::uuid()->toString(),
             'name' => 'Administrator',
             'username' => 'admin',
-            'password' => bcrypt('pastibisa'),
             'phone' => '081234567890',
             'email' => 'admin@example.com',
-        ]);
-        User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('pastibisa'),
         ]);
 
         $divisions = ['Mobile Apps', 'QA', 'Full Stack', 'Backend', 'Frontend', 'UI/UX Designer'];

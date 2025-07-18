@@ -14,11 +14,11 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('username', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
@@ -38,8 +38,8 @@ class AuthController extends Controller
                 'admin' => [
                     'id' => $user->id,
                     'name' => $user->name,
-                    // 'username' => $user->username ?? null,
-                    // 'phone' => $user->phone ?? null,
+                    'username' => $user->username ?? null,
+                    'phone' => $user->phone ?? null,
                     'email' => $user->email,
                 ]
             ]
