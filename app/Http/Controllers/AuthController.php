@@ -1,58 +1,77 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\Admin;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        try {
+            // Check if user is already authenticated
+            if (Auth::guard('admin')->check()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Anda sudah login',
+                ], 400);
+            }
 
-        $user = User::where('username', $request->username)->first();
+            $credentials = $request->only('username', 'password');
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+            $admin = Admin::where('username', $credentials['username'])->first();
+
+            if (!$admin || !Hash::check($credentials['password'], $admin->password)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Username atau password salah',
+                ], 401);
+            }
+
+            $token = $admin->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login berhasil',
+                'data' => [
+                    'token' => $token,
+                    'admin' => [
+                        'id' => $admin->id,
+                        'name' => $admin->name,
+                        'username' => $admin->username,
+                        'phone' => $admin->phone,
+                        'email' => $admin->email,
+                    ]
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'The provided credentials are incorrect.',
-                'data' => null
-            ], 401);
+                'message' => 'Terjadi kesalahan sistem',
+            ], 500);
         }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Login successful',
-            'data' => [
-                'token' => $token,
-                'admin' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'username' => $user->username ?? null,
-                    'phone' => $user->phone ?? null,
-                    'email' => $user->email,
-                ]
-            ]
-        ]);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logout successful'
-        ]);
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Logout berhasil',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan sistem',
+            ], 500);
+        }
     }
 }
