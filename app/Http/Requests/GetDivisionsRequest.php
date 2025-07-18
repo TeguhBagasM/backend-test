@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class GetDivisionsRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,8 +14,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string',
-            'password' => 'required|string',
+            'name' => 'nullable|string',
         ];
     }
 }

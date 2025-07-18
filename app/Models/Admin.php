@@ -1,21 +1,22 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Str;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    public $incrementing = false;
     protected $keyType = 'string';
-    protected $primaryKey = 'id';
+    public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'name',
         'username',
         'phone',
@@ -28,16 +29,14 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
     protected static function boot()
     {
         parent::boot();
+        
         static::creating(function ($model) {
-            $model->id = (string) Str::uuid();
+            if (empty($model->id)) {
+                $model->id = (string) \Illuminate\Support\Str::uuid();
+            }
         });
     }
 }

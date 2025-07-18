@@ -13,8 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-        'guest:admin' => \App\Http\Middleware\EnsureNotAuthenticated::class,
-        'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
+        'guest.api' => \App\Http\Middleware\EnsureNotAuthenticated::class,
     ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

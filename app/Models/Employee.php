@@ -1,19 +1,19 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Employee extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
     protected $keyType = 'string';
-    protected $primaryKey = 'id';
+    public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'image',
         'name',
         'phone',
@@ -24,8 +24,11 @@ class Employee extends Model
     protected static function boot()
     {
         parent::boot();
+        
         static::creating(function ($model) {
-            $model->id = (string) Str::uuid();
+            if (empty($model->id)) {
+                $model->id = (string) \Illuminate\Support\Str::uuid();
+            }
         });
     }
 
