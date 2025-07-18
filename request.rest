@@ -9,32 +9,32 @@ Content-Type: application/json
 
 ### Logout
 POST http://127.0.0.1:8000/api/logout
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
 
 ### get divisions
 GET http://127.0.0.1:8000/api/divisions
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
 
 
 ### get employees
 GET http://127.0.0.1:8000/api/employees
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
 
 ### Create new employee
 POST http://127.0.0.1:8000/api/employees
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
 Content-Type: application/json
 
 {
-  "name": "Bagas",
-  "phone": "081234567890",
+  "name": "Teguh",
+  "phone": "081212121212",
   "division_id": "29014e5c-ac96-4f21-bfe4-4e61aa7a0691",
   "position": "Solo Developer"
 }
 
-### Update employee
-PUT http://127.0.0.1:8000/api/employees/62a05934-6448-4621-bd07-25a305f0a6c3
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+### Update employee 
+PUT http://127.0.0.1:8000/api/employees/d9b0f096-ca2f-4633-85c9-afd293a18f83
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
 Content-Type: application/json
 
 {
@@ -45,5 +45,9 @@ Content-Type: application/json
 }
 
 ### Delete employee
-DELETE http://127.0.0.1:8000/api/employees/62a05934-6448-4621-bd07-25a305f0a6c3
-Authorization: Bearer 2|7223KYAITFJ6h4uoIxDALqFvI3FhCoa6J62Ef0ob69acb037
+DELETE http://127.0.0.1:8000/api/employees/d9b0f096-ca2f-4633-85c9-afd293a18f83
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+
+### Test route
+GET http://127.0.0.1:8000/api/test-update/d9b0f096-ca2f-4633-85c9-afd293a18f83
+Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5

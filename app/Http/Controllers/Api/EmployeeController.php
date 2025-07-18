@@ -7,6 +7,7 @@ use App\Http\Requests\CreateEmployeeRequest;
 use App\Http\Requests\GetEmployeesRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
@@ -53,7 +54,7 @@ class EmployeeController extends Controller
             $data = [
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'division_id' => $request->division_id, // Perbaiki ini
+                'division_id' => $request->division_id, 
                 'position' => $request->position,
             ];
 
@@ -76,26 +77,28 @@ class EmployeeController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan sistem',
-                'error' => $e->getMessage() // Tambahkan ini untuk debug
+                'error' => $e->getMessage() 
             ], 500);
         }
     }
     
     public function update(UpdateEmployeeRequest $request, $id)
     {
+        Log::info('Update method called', [
+        'id' => $id,
+        'request_data' => $request->all(),
+    ]);
         try {
             $employee = Employee::findOrFail($id);
 
             $data = [
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'division_id' => $request->division,
+                'division_id' => $request->division_id, 
                 'position' => $request->position,
             ];
 
-            // Handle image upload
             if ($request->hasFile('image')) {
-                // Delete old image if exists
                 if ($employee->image) {
                     Storage::disk('public')->delete($employee->image);
                 }
@@ -111,13 +114,16 @@ class EmployeeController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data karyawan berhasil diperbarui',
+                'data' => $employee->fresh() 
             ], 200);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan sistem',
-            ], 500);
+        Log::error('Update error: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Terjadi kesalahan sistem',
+            'error' => $e->getMessage()
+        ], 500);
         }
     }
     
@@ -126,11 +132,9 @@ class EmployeeController extends Controller
         try {
             $employee = Employee::findOrFail($id);
 
-            // Delete image if exists
             if ($employee->image) {
                 Storage::disk('public')->delete($employee->image);
             }
-
             $employee->delete();
 
             return response()->json([
