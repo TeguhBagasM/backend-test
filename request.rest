@@ -9,20 +9,20 @@ Content-Type: application/json
 
 ### Logout
 POST http://127.0.0.1:8000/api/logout
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 
 ### get divisions
 GET http://127.0.0.1:8000/api/divisions
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 
 
 ### get employees
 GET http://127.0.0.1:8000/api/employees
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 
 ### Create new employee
 POST http://127.0.0.1:8000/api/employees
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 Content-Type: application/json
 
 {
@@ -33,12 +33,12 @@ Content-Type: application/json
 }
 
 ### Update employee 
-PUT http://127.0.0.1:8000/api/employees/d9b0f096-ca2f-4633-85c9-afd293a18f83
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+PUT http://127.0.0.1:8000/api/employees/e0e99321-1546-406d-be94-7db89472bd9a
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 Content-Type: application/json
 
 {
-  "name": "Bagas Updated",
+  "name": "Teguh Updated",
   "phone": "081234567890",
   "division_id": "29014e5c-ac96-4f21-bfe4-4e61aa7a0691",
   "position": "Senior Developer"
@@ -46,8 +46,8 @@ Content-Type: application/json
 
 ### Delete employee
 DELETE http://127.0.0.1:8000/api/employees/d9b0f096-ca2f-4633-85c9-afd293a18f83
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
 
 ### Test route
 GET http://127.0.0.1:8000/api/test-update/d9b0f096-ca2f-4633-85c9-afd293a18f83
-Authorization: Bearer 3|KL3gXTHbkhp4cw5qoctdtMKede71XgJEu8uf6ZVVf52070c5
+Authorization: Bearer 9|QBeXm4gJfzZlSMrQKiccnJEZvGmz8IUpOba4oZYk76e10834
